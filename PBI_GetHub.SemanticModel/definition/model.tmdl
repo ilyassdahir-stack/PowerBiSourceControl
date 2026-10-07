@@ -1,0 +1,21 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-FR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Export"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Export
+ref table DateTableTemplate_1e22a038-57c2-45d6-a611-d01d3fcb16c2
+ref table LocalDateTable_3e8088f0-76a4-4ca0-8efc-d2ec5e2c35b9
+
+ref cultureInfo fr-FR
+

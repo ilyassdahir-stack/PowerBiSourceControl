@@ -1,0 +1,5 @@
+relationship f8a6bdef-3022-40e8-8683-b5aeb54091a2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Export.Date
+	toColumn: LocalDateTable_3e8088f0-76a4-4ca0-8efc-d2ec5e2c35b9.Date
+

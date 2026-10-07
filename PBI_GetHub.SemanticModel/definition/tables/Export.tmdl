@@ -1,0 +1,84 @@
+table Export
+	lineageTag: 87c2029a-b40f-4d16-a4cc-42dfa626f62d
+
+	column Country
+		dataType: string
+		lineageTag: 149b5496-865a-4cc5-84b2-2ea9f37d153a
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Code_Base_Label
+		dataType: string
+		lineageTag: 38b4333a-498e-4c63-9cdc-03f6f0c19c18
+		summarizeBy: none
+		sourceColumn: Code_Base_Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6847ecbc-fd79-4f20-908e-0ee915fde5cc
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: f8a6bdef-3022-40e8-8683-b5aeb54091a2
+			defaultHierarchy: LocalDateTable_3e8088f0-76a4-4ca0-8efc-d2ec5e2c35b9.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Variation
+		dataType: string
+		lineageTag: 2b54241e-f3bb-4bfe-80a0-fdf491a9d39b
+		summarizeBy: none
+		sourceColumn: Variation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Base
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a745daf-9894-4c5b-9c33-1c098b5698f6
+		summarizeBy: sum
+		sourceColumn: Base
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget
+		dataType: int64
+		formatString: 0
+		lineageTag: b0517c96-5f30-43c3-b00a-3edab5d3eb5a
+		summarizeBy: sum
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column YOY%
+		dataType: double
+		lineageTag: 077709ee-e102-47d6-8df4-072969440700
+		summarizeBy: sum
+		sourceColumn: YOY%
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Export = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\idahir\Downloads\data.xlsx"), null, true),
+				    Export_Sheet = Source{[Item="Export",Kind="Sheet"]}[Data],
+				    #"En-têtes promus" = Table.PromoteHeaders(Export_Sheet, [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"Country", type text}, {"Code_Base_Label", type text}, {"Date", type date}, {"Variation", type text}, {"Base", Int64.Type}, {"Budget", Int64.Type}, {"YOY%", type number}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_ResultType = Table
+
